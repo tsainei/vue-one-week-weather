@@ -1,37 +1,35 @@
 <template>
-    <div class="input-group mb-3 flex-nowrap search-box">
-      <span class="input-group-text">
-        <img src="../assets/search.png" alt
-      /></span>
-      <div class="search-box ms-0">
-        <v-select
-          type="text"
-          class="search box search-bar ms-0"
-          placeholder="Search for a City"
-          v-model="selectedCity"
-          @input="weatherLocation()"
-          @search="onSearch"
-          :options="cities"
-          label="name"
-          :filterable="false"
-        >
-          <template slot="no-options">Type City Name</template>
-          <template slot="option" slot-scope="option">
+  <div class="input-group mb-3 flex-nowrap search-box">
+    <span class="input-group-text">
+      <img src="../assets/search.png" alt
+    /></span>
+    <div class="search-box ms-0">
+      <v-select
+        type="text"
+        class="search box search-bar ms-0"
+        placeholder="Search for a City"
+        v-model="selectedCity"
+        @input="weatherLocation()"
+        @search="onSearch"
+        :options="cities"
+        label="name"
+        :filterable="false"
+      >
+        <template slot="no-options">Type City Name</template>
+        <template slot="option" slot-scope="option">
+          <div class="d-center">{{ option.name }}, {{ option.country }}</div>
+        </template>
+        <template slot="selected-option" slot-scope="option">
+          <div class="selected d-center">
             <div class="d-center">{{ option.name }}, {{ option.country }}</div>
-          </template>
-          <template slot="selected-option" slot-scope="option">
-            <div class="selected d-center">
-              <div class="d-center">
-                {{ option.name }}, {{ option.country }}
-              </div>
-            </div>
-          </template>
-        </v-select>
-      </div>
-      <button class="input-group-text border-0 ms-0">
-        <img src="../assets/target.png" alt />
-      </button>
+          </div>
+        </template>
+      </v-select>
     </div>
+    <button class="input-group-text border-0 ms-0" @click="getLocation">
+      <img src="../assets/target.png" alt />
+    </button>
+  </div>
 </template>
 <script>
 import axios from 'axios';
@@ -68,7 +66,6 @@ export default {
     //select the city
     async weatherLocation() {
       this.lat = this.selectedCity.lat;
-      console.log(this.selectedCity.name);
       this.lon = this.selectedCity.lon;
       await axios(
         `${this.api_daily}lat=${this.lat}&lon=${this.lon}&exclude=alerts,hourly,minutely,alerts,current&units=metric&appid=${this.api_key}`
@@ -79,9 +76,34 @@ export default {
         `${this.api_current}q=${this.selectedCity.name}&units=metric&appid=${this.api_key} `
       ).then((response) => {
         this.$emit('current', response.data);
-        console.log(response.data);
       });
       this.$emit('showCards');
+    },
+    //With Geolocation
+
+    async getGeolocation(data) {
+      await axios(
+        `${this.api_daily}lat=${data.coords.latitude}&lon=${data.coords.longitude}&exclude=alerts,hourly,minutely,alerts,current&units=metric&appid=${this.api_key}`
+      ).then((response) => {
+        this.$emit('daily', response.data);
+      });
+      await axios(
+        `${this.api_current}lat=${data.coords.latitude}&lon=${data.coords.longitude}&units=metric&appid=${this.api_key} `
+      ).then((response) => {
+        this.$emit('current', response.data);
+      });
+      this.$emit('showCards');
+    },
+    //Get user location
+    getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((data) => {
+          this.getGeolocation(data);
+          this.$emit('showCards');
+        });
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+      }
     },
   },
 };

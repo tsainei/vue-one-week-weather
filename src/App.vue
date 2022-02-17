@@ -1,5 +1,12 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="
+      typeof currentData.main != 'undefined' && currentData.main.temp > 16
+        ? 'warm'
+        : ''
+    "
+  >
     <main>
       <div class="header">7 Day Weather App</div>
       <Search
@@ -21,7 +28,6 @@ import Search from './components/search.vue';
 export default {
   name: 'app',
   components: { Cards, Search },
-
   data() {
     return {
       currentData: [],
