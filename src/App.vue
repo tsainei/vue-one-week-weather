@@ -85,6 +85,6 @@ main {
   align-items: center;
   font-family: 'AlphaClouds';
   color: white;
-  font-size: 100px;
+  font-size: 70px;
 }
 </style>
