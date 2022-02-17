@@ -90,7 +90,6 @@ export default {
 <style>
 .search-box {
   width: 100%;
-  margin-bottom: 30px;
   margin-left: 0px;
   display: flex;
   justify-content: center;
