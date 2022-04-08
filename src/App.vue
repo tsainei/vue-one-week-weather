@@ -2,13 +2,13 @@
   <div
     id="app"
     :class="
-      typeof currentData.main != 'undefined' && currentData.main.temp > 16
-        ? 'warm'
+      typeof currentData.main != 'undefined' && currentData.main.temp <16
+        ? 'cold'
         : ''
     "
   >
     <main>
-      <div class="header">7 Day Weather App</div>
+      <div class="header">One Week Weather</div>
       <Search
         @showCards="showCard = true"
         @current="getCurrent"
@@ -47,26 +47,24 @@ export default {
 </script>
 
 <style>
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-@font-face {
-  font-family: 'AlphaClouds';
-  src: local('AlphaClouds'), url(./assets/AlphaClouds.ttf) format('truetype');
-}
+
 body {
   font-family: 'montserrat', sans-serif;
 }
 #app {
-  background-image: url('./assets/cold-bg.jpg');
-  background-size: cover;
+  background-image: url('./assets/warm-bg.jpg');
+  background-size:cover;
   background-position: bottom;
   transition: 0.4s;
 }
-#app.warm {
-  background-image: url('./assets/warm-bg.jpg');
+#app.cold {
+  background-image: url('./assets/cold-bg.jpg');
 }
 main {
   min-height: 100vh;
@@ -79,12 +77,14 @@ main {
   justify-content: center;
   align-items: center;
 }
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 .header {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-family: 'AlphaClouds';
+  font-family: 'Gloria Hallelujah', cursive;
   color: white;
+  font-weight:700;
   font-size: 70px;
 }
 </style>

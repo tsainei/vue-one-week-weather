@@ -1,34 +1,38 @@
 <template>
-  <div class="input-group mb-3 flex-nowrap search-box">
-    <span class="input-group-text">
-      <img src="../assets/search.png" alt
-    /></span>
-    <div class="search-box ms-0">
-      <v-select
-        type="text"
-        class="search box search-bar ms-0"
-        placeholder="Search for a City"
-        v-model="selectedCity"
-        @input="weatherLocation()"
-        @search="onSearch"
-        :options="cities"
-        label="name"
-        :filterable="false"
-      >
-        <template slot="no-options">Type City Name</template>
-        <template slot="option" slot-scope="option">
-          <div class="d-center">{{ option.name }}, {{ option.country }}</div>
-        </template>
-        <template slot="selected-option" slot-scope="option">
-          <div class="selected d-center">
+  <div class="box">
+    <div class="input-group mb-3 flex-nowrap search-box">
+      <span class="input-group-text">
+        <img src="../assets/search.png" alt
+      /></span>
+      <div class="search-box ms-0">
+        <v-select
+          type="text"
+          class="search box search-bar ms-0"
+          placeholder="Search for a City"
+          v-model="selectedCity"
+          @input="weatherLocation()"
+          @search="onSearch"
+          :options="cities"
+          label="name"
+          :filterable="false"
+        >
+          <template slot="no-options">Type City Name</template>
+          <template slot="option" slot-scope="option">
             <div class="d-center">{{ option.name }}, {{ option.country }}</div>
-          </div>
-        </template>
-      </v-select>
+          </template>
+          <template slot="selected-option" slot-scope="option">
+            <div class="selected d-center">
+              <div class="d-center">
+                {{ option.name }}, {{ option.country }}
+              </div>
+            </div>
+          </template>
+        </v-select>
+      </div>
+      <button class="input-group-text border-0 ms-0" @click="getLocation">
+        <img src="../assets/target.png" alt />
+      </button>
     </div>
-    <button class="input-group-text border-0 ms-0" @click="getLocation">
-      <img src="../assets/target.png" alt />
-    </button>
   </div>
 </template>
 <script>
@@ -110,8 +114,19 @@ export default {
 </script>
 
 <style>
+.box {
+  width: 60vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 1300px) {
+  .box {
+    width: 90vw;
+  }
+}
 .search-box {
   width: 100%;
+
   margin-left: 0px;
   display: flex;
   justify-content: center;

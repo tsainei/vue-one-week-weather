@@ -3,7 +3,7 @@
     <div class="card-1">
       <div class="cards">
         <div class="today">
-          <h2>{{ current.name }}</h2>
+          <h2> {{ date }} in {{ current.name }}</h2>
           <div class="daily">
             <img
               :src="
@@ -87,22 +87,32 @@ export default {
         Thunderstorm: 'thunder',
       },
       days: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
+        'Sat',
+        'Sun',
+        'Mon',
+        'Tue',
+        'Wed',
+        'Thu',
+        'Fri',
+        'Sat',
+        'Sun',
+        'Mon',
+        'Tue',
+        'Wed',
+        'Thu',
+        'Fri',
       ],
       daysIndex: [],
+      date: '',
     };
   },
 
   mounted() {
     var currentDate = new Date();
-    var nextWeek = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+    var nextWeek = new Date(currentDate.getTime() + 8 * 24 * 60 * 60 * 1000);
     var days = [];
+    var today = new Date();
+    this.date = today.getDate()  + '/' + (today.getMonth()+ 1);
     while (currentDate <= nextWeek) {
       days.push(new Date(currentDate).getDay());
       currentDate.setDate(currentDate.getDate() + 1);
@@ -112,7 +122,7 @@ export default {
   watch: {
     daily: function () {
       for (let i = 0; i < this.daysIndex.length; i++) {
-        this.daily[i] = this.days[this.daysIndex[i]];
+        this.daily.daily[i].day = this.days[this.daysIndex[i]];
       }
     },
   },
@@ -123,11 +133,11 @@ export default {
 .results {
   display: flex;
   flex-direction: column;
-  width: 60vw !important;
+  width: 60vw ;
 }
 .cards {
   display: flex;
-  width: 100%;
+  width:  auto;
   margin-top: 20px;
   flex-direction: row;
   justify-content: space-around;
@@ -135,8 +145,9 @@ export default {
   flex-wrap: wrap;
 }
 .card-1 {
-  width: 100%;
+  width: auto;
   background-color: white;
+  opacity: 0.8;
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px;
@@ -164,6 +175,7 @@ export default {
   width: 100%;
   height: 300px;
   background-color: white;
+  opacity: 0.8;
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px;
