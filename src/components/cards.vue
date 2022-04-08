@@ -3,7 +3,7 @@
     <div class="card-1">
       <div class="cards">
         <div class="today">
-          <h2> {{ date }} in {{ current.name }}</h2>
+          <h2>{{ date }} in {{ current.name }}</h2>
           <div class="daily">
             <img
               :src="
@@ -112,7 +112,7 @@ export default {
     var nextWeek = new Date(currentDate.getTime() + 8 * 24 * 60 * 60 * 1000);
     var days = [];
     var today = new Date();
-    this.date = today.getDate()  + '/' + (today.getMonth()+ 1);
+    this.date = today.getDate() + '/' + (today.getMonth() + 1);
     while (currentDate <= nextWeek) {
       days.push(new Date(currentDate).getDay());
       currentDate.setDate(currentDate.getDate() + 1);
@@ -133,11 +133,11 @@ export default {
 .results {
   display: flex;
   flex-direction: column;
-  width: 60vw ;
+  width: 60vw;
 }
 .cards {
   display: flex;
-  width:  auto;
+  width: auto;
   margin-top: 20px;
   flex-direction: row;
   justify-content: space-around;
